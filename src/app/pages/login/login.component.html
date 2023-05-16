@@ -4,24 +4,30 @@
     <div class="contenedor-form">
       <h2>Iniciar Sesión</h2>
       <form class="w-100">
-        <div class="col w-50">
+        <div class="col w-100">
           <div class="row">
             <input
               type="text"
-              class="form-control w-100 mb-3"
-              placeholder="First name"
+              class="form-control w-100 mb-3 fs-5 dark-border"
+              placeholder="Usuario"
             />
           </div>
           <div class="row">
             <input
               type="text"
-              class="form-control w-100"
-              placeholder="Last name"
+              class="form-control w-100 fs-5 dark-border"
+              placeholder="Contraseña"
             />
           </div>
         </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="ingresar($event)"
+        >
+          Ingresar
+        </button>
       </form>
-      <button type="submit" class="btn btn-primary">Ingresar</button>
     </div>
     <div class="contenedor-descripcion">
       <h2>¡BIENVENIDO!</h2>

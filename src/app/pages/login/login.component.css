@@ -17,7 +17,7 @@ section{
     align-items: center;
     justify-content: center;
     font-family: 'Inter';
-    max-width: 70%;
+    max-width: 900px;
 }
 
 section h2{
@@ -31,7 +31,7 @@ div.contenedor-descripcion{
     height: 50%;
     text-align: center;
     max-width: 50%;
-    padding: 100px;
+    padding: 50px;
     box-sizing: border-box;
 }
 
@@ -57,14 +57,26 @@ div.contenedor-descripcion p{
 
 form{
     width: 40%;
+    height: 70%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
 form input {
     width: 50%;
+}
+
+.contenedor-form .btn-primary{
+    background-color: #f29406;
+    border: none;
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.dark-border{
+    border: 1px solid #000;
 }
