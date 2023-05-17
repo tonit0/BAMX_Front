@@ -5,20 +5,13 @@ import { ComponentsModule } from '../components/components.module';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import { RouterModule } from '@angular/router';
 
-
-
 @NgModule({
-  declarations: [
-    LoginComponent,
-    MenuPrincipalComponent,
-  ],
+  declarations: [LoginComponent, MenuPrincipalComponent],
   imports: [
     CommonModule,
     ComponentsModule,
-    RouterModule.forChild([
-      { path: '', component: MenuPrincipalComponent }
-    ])
+    RouterModule.forChild([{ path: '', component: MenuPrincipalComponent }]),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PagesModule { }
+export class PagesModule {}
