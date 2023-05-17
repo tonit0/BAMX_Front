@@ -1,0 +1,12 @@
+div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 15px;
+    font-size: 20px;
+    color: #FCFCFC;
+}
+
+div p {
+    margin-bottom: 0;
+}
