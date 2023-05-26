@@ -1,0 +1,69 @@
+<div class="content">
+
+    <div class="barraprincipal">
+
+        <h1> Fallas </h1>
+    
+        <div class="top-buttons">
+            <button class="new"> <i class="fa-solid fa-circle-plus"></i> Nuevo </button>
+            <button (click)="hide_this( false )" class="new" [ngClass] = " {hidden: (tipo === false) ? true : false} "> Pendientes </button>
+            <button (click)="hide_this( true )" class="new" [ngClass] = " {hidden: (tipo === false) ? false : true} "> Concluidas </button>
+        </div>
+
+    </div>
+    
+    
+        <div class="table">
+
+            <button class="btn-search"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+
+            <section class="example-container" tabindex="0">
+            <table mat-table [dataSource]="dataSource">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+              
+                <!-- Position Column -->
+                <ng-container matColumnDef="ID">
+                  <th mat-header-cell *matHeaderCellDef> ID </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="Vehiculo">
+                  <th mat-header-cell *matHeaderCellDef> Vehiculo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Vehiculo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Preferencia">
+                    <th mat-header-cell *matHeaderCellDef> Preferencia </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Preferencia}} </td>
+                  </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="Fecha">
+                  <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Fecha}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Estatus">
+                    <th mat-header-cell *matHeaderCellDef> Estatus </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Estatus}} </td>
+                  </ng-container>
+              
+                <ng-container matColumnDef="Buttons">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element" class="btns" style="text-align: right; padding-right: 3rem;">
+                        <button class="btn-icon"> <i class="fa-solid fa-wrench"></i> </button>
+                        <button class="btn-icon"> <i class="fa-solid fa-pen"></i> </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>            </table>
+            </section>
+
+        </div>
+
+</div>
+
