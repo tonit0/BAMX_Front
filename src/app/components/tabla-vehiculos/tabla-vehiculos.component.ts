@@ -1,11 +1,11 @@
 import { ThisReceiver } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import {ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import { ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-declare var window:any;
+declare var window: any;
 export interface PeriodicElement {
   ID: number;
   Marca: string;
@@ -15,26 +15,139 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-  {ID: 1, Marca: 'Algo', Modelo: 'Algo 2.0', Color: 'Rojo', Placas: 'EGU-18-80'},
-
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
 ];
 
 @Component({
@@ -42,24 +155,20 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './tabla-vehiculos.component.html',
   styleUrls: ['./tabla-vehiculos.component.css'],
 })
-
 export class TablaVehiculosComponent {
-
   formVehiculo!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder){
-
-  }
-  formModal:any;
-  formModal2:any;
-  ngOnInit():void{
+  constructor(private formBuilder: FormBuilder) {}
+  formModal: any;
+  formModal2: any;
+  ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('exampleModalCenter')
-    )
+    );
 
     this.formModal2 = new window.bootstrap.Modal(
       document.getElementById('exampleModalCenter2')
-    )
+    );
 
     this.formVehiculo = this.formBuilder.group({
       idVehiculo: [''],
@@ -74,35 +183,36 @@ export class TablaVehiculosComponent {
       rendimientoCombustible: [''],
       placas: [''],
       urlFoto: [''],
-      estatus: ['']
+      estatus: [''],
     });
   }
-  displayedColumns: string[] = ['ID', 'Marca', 'Modelo', 'Color', 'Placas', 'Buttons'];
+  displayedColumns: string[] = [
+    'ID',
+    'Marca',
+    'Modelo',
+    'Color',
+    'Placas',
+    'Buttons',
+  ];
   dataSource = ELEMENT_DATA;
 
-
-  openModal(){
+  openModal() {
     this.formModal.show();
   }
 
-  closeModal(){
+  closeModal() {
     this.formModal.hide();
   }
 
-  openModal2(){
+  openModal2() {
     this.formModal2.show();
   }
 
-  closeModal2(){
+  closeModal2() {
     this.formModal2.hide();
   }
 
+  submitForm() {}
 
-  submitForm(){
-
-  }
-
-  submitForm2(){
-
-  }
+  submitForm2() {}
 }

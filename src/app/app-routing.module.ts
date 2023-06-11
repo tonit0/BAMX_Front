@@ -26,11 +26,11 @@ const routes: Routes = [
         component: TablaVehiculosComponent,
       },
       {
-        path: 'mantenimiento',
+        path: 'vehiculos/mantenimientos/:id',
         component: TablaMantenimientoComponent,
       },
       {
-        path: 'revisiones',
+        path: 'vehiculos/revisiones/:id',
         component: TablaRevisionesComponent,
       },
       {
