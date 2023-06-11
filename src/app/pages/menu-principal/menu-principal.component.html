@@ -3,11 +3,11 @@
     <h3>Menú Principal</h3>
     <hr>
     <div class="contenedor-cartas">
-        <button class="carta">
+        <button class="carta" (click)="cambiarPagina($event, 'vehiculos')">
             <img src="../../../assets/vehiculo.png " alt="">
             <h4>Vehículos</h4>
         </button>
-        <button class="carta">
+        <button class="carta" (click)="cambiarPagina($event, 'proveedores')">
             <img src="../../../assets/proveedores.png " alt="">
             <h4>Proveedores</h4>
         </button>
@@ -15,7 +15,7 @@
             <img src="../../../assets/reportes.png " alt="">
             <h4>Reportes</h4>
         </button>
-        <button class="carta">
+        <button class="carta" (click)="cambiarPagina($event, 'empleados')">
             <img src="../../../assets/empleados.png " alt="">
             <h4>Empleados</h4>
         </button>

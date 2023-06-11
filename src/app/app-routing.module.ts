@@ -8,12 +8,14 @@ import { TablaRevisionesComponent } from './components/tabla-revisiones/tabla-re
 import { TablaProveedoresComponent } from './components/tabla-proveedores/tabla-proveedores.component';
 import { TablaEmpleadosComponent } from './components/tabla-empleados/tabla-empleados.component';
 import { TablaFallasComponent } from './components/tabla-fallas/tabla-fallas.component';
+import { MenuPrincipalComponent } from './pages/menu-principal/menu-principal.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'inicio',
+    component: MenuPrincipalComponent,
     loadChildren: () =>
       import('./pages/pages.module').then((m) => m.PagesModule),
   },
