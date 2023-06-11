@@ -40,7 +40,6 @@ import { TablaFallasComponent } from './tabla-fallas/tabla-fallas.component';
     RouterModule,
     MatTableModule,
     MatPaginatorModule,
-    BrowserAnimationsModule,
     MatTooltipModule,
     OverlayModule,
     ScrollingModule,
