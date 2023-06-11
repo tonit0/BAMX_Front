@@ -13,8 +13,6 @@ import { MatTableModule } from '@angular/material/table';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-import { MAT_TOOLTIP_SCROLL_STRATEGY } from '@angular/material/tooltip';
-import { Overlay } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
