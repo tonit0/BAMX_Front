@@ -194,7 +194,13 @@ export class TablaVehiculosComponent {
     'Placas',
     'Buttons',
   ];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   openModal() {
     this.formModal.show();

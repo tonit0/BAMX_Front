@@ -32,8 +32,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './tabla-revisiones.component.html',
   styleUrls: ['./tabla-revisiones.component.css']
 })
-export class TablaRevisionesComponent {
+export class TablaRevisionesComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['ID', 'Fecha', 'Hora', 'Conductor', 'Destiono', 'Buttons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 }

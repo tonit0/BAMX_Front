@@ -6,6 +6,13 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MAT_TOOLTIP_SCROLL_STRATEGY, MatTooltipModule } from '@angular/material/tooltip';
+import { Overlay, OverlayModule } from '@angular/cdk/overlay';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 import { MAT_TOOLTIP_SCROLL_STRATEGY } from '@angular/material/tooltip';
 import { Overlay } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
@@ -21,6 +28,13 @@ import { CommonModule } from '@angular/common';
     NgbModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatTooltipModule,
+    OverlayModule,
+    ScrollingModule,
+    MatDialogModule,
+    MatMenuModule
   ],
   providers: [
     {
