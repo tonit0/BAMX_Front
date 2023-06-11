@@ -10,7 +10,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TablaMantenimientoComponent } from './tabla-mantenimiento/tabla-mantenimiento.component';
 import { TablaRevisionesComponent } from './tabla-revisiones/tabla-revisiones.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -38,9 +37,8 @@ import { TablaFallasComponent } from './tabla-fallas/tabla-fallas.component';
     CommonModule,
     FontAwesomeModule,
     RouterModule,
-    MatTableModule,
     MatPaginatorModule,
-    BrowserAnimationsModule,
+    MatTableModule,
     MatTooltipModule,
     OverlayModule,
     ScrollingModule,

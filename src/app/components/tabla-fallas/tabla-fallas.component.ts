@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
   ID: number;
@@ -28,12 +30,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './tabla-fallas.component.html',
   styleUrls: ['./tabla-fallas.component.css']
 })
-export class TablaFallasComponent {
+export class TablaFallasComponent implements AfterViewInit {
 
   tipo: boolean = false;
 
   displayedColumns: string[] = ['ID', 'Vehiculo', 'Preferencia', 'Fecha', 'Estatus', 'Buttons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   hide_this( now: boolean ) {
 

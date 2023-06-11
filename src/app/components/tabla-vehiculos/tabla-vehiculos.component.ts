@@ -41,9 +41,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./tabla-vehiculos.component.css'],
 })
 
-export class TablaVehiculosComponent {
+export class TablaVehiculosComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['ID', 'Marca', 'Modelo', 'Color', 'Placas', 'Buttons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
 }
