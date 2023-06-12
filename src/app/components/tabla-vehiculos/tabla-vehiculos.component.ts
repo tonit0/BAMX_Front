@@ -4,6 +4,8 @@ import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Vehiculos } from 'src/app/models/vehiculo';
+import { TablasService } from 'src/app/services/tablas.service';
 
 declare var window: any;
 export interface PeriodicElement {
@@ -148,7 +150,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     Color: 'Rojo',
     Placas: 'EGU-18-80',
   },
-];
+]
 
 @Component({
   selector: 'app-tabla-vehiculos',
@@ -157,8 +159,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class TablaVehiculosComponent {
   formVehiculo!: FormGroup;
-
-  constructor(private formBuilder: FormBuilder) {}
+  displayedColumns: string[] = ['ID', 'Marca', 'Modelo', 'Color', 'Placas', 'Buttons'];
+  dataSource = new MatTableDataSource<Vehiculos>;
+  data: any;
+  
+  constructor(private formBuilder: FormBuilder, private TableService: TablasService ) {}
   formModal: any;
   formModal2: any;
   ngOnInit(): void {
@@ -186,20 +191,25 @@ export class TablaVehiculosComponent {
       estatus: [''],
     });
   }
-  displayedColumns: string[] = [
-    'ID',
-    'Marca',
-    'Modelo',
-    'Color',
-    'Placas',
-    'Buttons',
-  ];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.obtenerVehiculos();
+  }
+
+  obtenerVehiculos(){
+    this.TableService.getVehicles().subscribe({
+      error: (error) => {
+      },
+      complete: () => {},
+      next: (response) => {
+        this.data = response;
+        console.log( this.data[0].marca.nombre );
+        this.dataSource = this.data;
+      },
+    });
   }
 
   openModal() {

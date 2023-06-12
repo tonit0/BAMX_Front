@@ -1,29 +1,8 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface PeriodicElement {
-  ID: number;
-  Vehiculo: string;
-  Preferencia: string;
-  Fecha: string;
-  Estatus: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-  {ID: 1, Vehiculo: "1231231asdas", Preferencia: "hoy", Fecha: '12-12-2022', Estatus: "Concluido"},
-];
+import { falla } from 'src/app/models/fallas';
+import { TablasService } from 'src/app/services/tablas.service';
 
 @Component({
   selector: 'app-tabla-fallas',
@@ -32,15 +11,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class TablaFallasComponent implements AfterViewInit {
 
+  constructor( private TableService: TablasService ) {}
+
   tipo: boolean = false;
 
   displayedColumns: string[] = ['ID', 'Vehiculo', 'Preferencia', 'Fecha', 'Estatus', 'Buttons'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<falla>;
+  data: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.obtenerFallas();
   }
 
   hide_this( now: boolean ) {
@@ -48,5 +31,19 @@ export class TablaFallasComponent implements AfterViewInit {
     this.tipo = now;
 
   }
+
+  obtenerFallas(){
+    this.TableService.getFailures().subscribe({
+      error: (error) => {
+      },
+      complete: () => {},
+      next: (response) => {
+        this.data = response;
+        console.log( this.data ) ;
+        this.dataSource = this.data;
+      },
+    });
+  }
+
 
 }

@@ -14,6 +14,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CommonModule } from '@angular/common';
     OverlayModule,
     ScrollingModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    HttpClientModule
   ],
   providers: [
     {
