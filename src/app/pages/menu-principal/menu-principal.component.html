@@ -3,27 +3,27 @@
     <h3>Menú Principal</h3>
     <hr>
     <div class="contenedor-cartas">
-        <button class="carta" (click)="cambiarPagina($event, 'vehiculos')">
+        <button class="carta" routerLink="/vehiculos">
             <img src="../../../assets/vehiculo.png " alt="">
             <h4>Vehículos</h4>
         </button>
-        <button class="carta" (click)="cambiarPagina($event, 'proveedores')">
+        <button class="carta" routerLink="/proveedores">
             <img src="../../../assets/proveedores.png " alt="">
             <h4>Proveedores</h4>
         </button>
-        <button class="carta">
+        <button class="carta" routerLink="/reportes">
             <img src="../../../assets/reportes.png " alt="">
             <h4>Reportes</h4>
         </button>
-        <button class="carta" (click)="cambiarPagina($event, 'empleados')">
+        <button class="carta" routerLink="/empleados">
             <img src="../../../assets/empleados.png " alt="">
             <h4>Empleados</h4>
         </button>
-        <button class="carta">
+        <button class="carta" routerLink="/entradas-salidas">
             <img src="../../../assets/entradas.salidas.png " alt="">
             <h4>Entradas/Salidas</h4>
         </button>
-        <button class="carta">
+        <button class="carta" routerLink="/rutas">
             <img src="../../../assets/rutas.png " alt="">
             <h4>Rutas</h4>
         </button>

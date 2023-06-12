@@ -4,7 +4,7 @@
 
         <h1> Mantenimiento </h1>
     
-        <button class="new"> <i class="fa-solid fa-circle-plus"></i> Nuevo </button>
+        <button class="new" (click)="openModal()" > <i class="fa-solid fa-circle-plus"></i> Nuevo </button>
     
     </div>
     
@@ -59,3 +59,171 @@
 
 </div>
 
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" >Registrar vehiculo</h2>
+        <button class="closeModalButton" type="button"  data-toggle="modal" (click)="closeModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="formMantenimiento" (ngSubmit)="submitForm()" >
+
+        <div class="modal-body">
+          
+          
+          <div class="form-group">
+            <label for="idMantenimiento">ID Mantenimiento</label>
+            <input type="text" class="form-control" id="idMantenimiento" formControlName="idMantenimiento" placeholder="ID Mantenimiento">
+          </div>
+        
+          <div class="form-group">
+            <label for="idVehiculo">ID Vehículo</label>
+            <input type="text" class="form-control" id="idVehiculo" formControlName="idVehiculo" placeholder="ID Vehículo">
+          </div>
+        
+          <div class="form-group">
+            <label for="tipoMantenimiento">Tipo de Mantenimiento</label>
+            <input type="text" class="form-control" id="tipoMantenimiento" formControlName="tipoMantenimiento" placeholder="Tipo de Mantenimiento">
+          </div>
+        
+          <div class="form-group">
+            <label for="fechaProgramada">Fecha Programada</label>
+            <input type="text" class="form-control" id="fechaProgramada" formControlName="fechaProgramada" placeholder="Fecha Programada">
+          </div>
+        
+          <div class="form-group">
+            <label for="actRealizada">Actividad Realizada</label>
+            <input type="text" class="form-control" id="actRealizada" formControlName="actRealizada" placeholder="Actividad Realizada">
+          </div>
+        
+          <div class="form-group">
+            <label for="idProveedor">ID Proveedor</label>
+            <input type="text" class="form-control" id="idProveedor" formControlName="idProveedor" placeholder="ID Proveedor">
+          </div>
+        
+          <div class="form-group">
+            <label for="equipoUsado">Equipo Usado</label>
+            <input type="text" class="form-control" id="equipoUsado" formControlName="equipoUsado" placeholder="Equipo Usado">
+          </div>
+        
+          <div class="form-group">
+            <label for="observaciones">Observaciones</label>
+            <input type="text" class="form-control" id="observaciones" formControlName="observaciones" placeholder="Observaciones">
+          </div>
+        
+          <div class="form-group">
+            <label for="total">Total</label>
+            <input type="text" class="form-control" id="total" formControlName="total" placeholder="Total">
+          </div>
+        
+          <div class="form-group">
+            <label for="estatus">Estatus</label>
+            <input type="text" class="form-control" id="estatus" formControlName="estatus" placeholder="Estatus">
+          </div>
+      
+          <button type="submit" class="btn btn-primary">Enviar</button>
+  
+        </div>
+        <div class="modal-footer">
+          
+          <button type="submit" class="closeModalButton" >Save changes</button>
+        </div>
+      </form>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" >Registrar vehiculo</h2>
+        <button class="closeModalButton" type="button"  data-toggle="modal" (click)="closeModal2()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="formMantenimiento" (ngSubmit)="submitForm2()" >
+
+        <div class="modal-body">
+          
+          
+          <div class="form-group">
+            <label for="idMantenimiento">ID Mantenimiento</label>
+            <input type="text" class="form-control" id="idMantenimiento" formControlName="idMantenimiento" placeholder="ID Mantenimiento">
+          </div>
+        
+          <div class="form-group">
+            <label for="idVehiculo">ID Vehículo</label>
+            <input type="text" class="form-control" id="idVehiculo" formControlName="idVehiculo" placeholder="ID Vehículo">
+          </div>
+        
+          <div class="form-group">
+            <label for="tipoMantenimiento">Tipo de Mantenimiento</label>
+            <input type="text" class="form-control" id="tipoMantenimiento" formControlName="tipoMantenimiento" placeholder="Tipo de Mantenimiento">
+          </div>
+        
+          <div class="form-group">
+            <label for="fechaProgramada">Fecha Programada</label>
+            <input type="text" class="form-control" id="fechaProgramada" formControlName="fechaProgramada" placeholder="Fecha Programada">
+          </div>
+        
+          <div class="form-group">
+            <label for="actRealizada">Actividad Realizada</label>
+            <input type="text" class="form-control" id="actRealizada" formControlName="actRealizada" placeholder="Actividad Realizada">
+          </div>
+        
+          <div class="form-group">
+            <label for="idProveedor">ID Proveedor</label>
+            <input type="text" class="form-control" id="idProveedor" formControlName="idProveedor" placeholder="ID Proveedor">
+          </div>
+        
+          <div class="form-group">
+            <label for="equipoUsado">Equipo Usado</label>
+            <input type="text" class="form-control" id="equipoUsado" formControlName="equipoUsado" placeholder="Equipo Usado">
+          </div>
+        
+          <div class="form-group">
+            <label for="observaciones">Observaciones</label>
+            <input type="text" class="form-control" id="observaciones" formControlName="observaciones" placeholder="Observaciones">
+          </div>
+        
+          <div class="form-group">
+            <label for="total">Total</label>
+            <input type="text" class="form-control" id="total" formControlName="total" placeholder="Total">
+          </div>
+        
+          <div class="form-group">
+            <label for="estatus">Estatus</label>
+            <input type="text" class="form-control" id="estatus" formControlName="estatus" placeholder="Estatus">
+          </div>
+      
+          <button type="submit" class="btn btn-primary">Enviar</button>
+  
+        </div>
+        <div class="modal-footer">
+          
+          <button type="submit" class="closeModalButton" >Save changes</button>
+        </div>
+      </form>
+
+      
+    </div>
+  </div>
+</div>

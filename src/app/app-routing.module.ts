@@ -28,12 +28,16 @@ const routes: Routes = [
         component: TablaVehiculosComponent,
       },
       {
-        path: 'mantenimiento',
+        path: 'vehiculos/mantenimientos/:id',
         component: TablaMantenimientoComponent,
       },
       {
-        path: 'revisiones',
+        path: 'vehiculos/revisiones/:id',
         component: TablaRevisionesComponent,
+      },
+      {
+        path: 'vehiculos/fallas/:id',
+        component: TablaFallasComponent,
       },
       {
         path: 'proveedores',
@@ -42,17 +46,13 @@ const routes: Routes = [
       {
         path: 'empleados',
         component: TablaEmpleadosComponent,
-      },
-      {
-        path: 'fallas',
-        component: TablaFallasComponent,
-      },
+      }
     ],
   },
   {
     path: 'navbar',
     component: NavbarComponent,
-  }
+  },
 ];
 
 @NgModule({

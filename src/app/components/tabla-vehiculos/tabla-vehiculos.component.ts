@@ -1,26 +1,196 @@
 import { ThisReceiver } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import {ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import { ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Vehiculos } from 'src/app/models/vehiculo';
 import { TablasService } from 'src/app/services/tablas.service';
+
+declare var window: any;
+export interface PeriodicElement {
+  ID: number;
+  Marca: string;
+  Modelo: string;
+  Color: string;
+  Placas: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+  {
+    ID: 1,
+    Marca: 'Algo',
+    Modelo: 'Algo 2.0',
+    Color: 'Rojo',
+    Placas: 'EGU-18-80',
+  },
+]
 
 @Component({
   selector: 'app-tabla-vehiculos',
   templateUrl: './tabla-vehiculos.component.html',
   styleUrls: ['./tabla-vehiculos.component.css'],
 })
-
-export class TablaVehiculosComponent implements AfterViewInit {
-
-  constructor( private TableService: TablasService ) {
-
-  }
-
+export class TablaVehiculosComponent {
+  formVehiculo!: FormGroup;
   displayedColumns: string[] = ['ID', 'Marca', 'Modelo', 'Color', 'Placas', 'Buttons'];
   dataSource = new MatTableDataSource<Vehiculos>;
   data: any;
+  
+  constructor(private formBuilder: FormBuilder, private TableService: TablasService ) {}
+  formModal: any;
+  formModal2: any;
+  ngOnInit(): void {
+    this.formModal = new window.bootstrap.Modal(
+      document.getElementById('exampleModalCenter')
+    );
+
+    this.formModal2 = new window.bootstrap.Modal(
+      document.getElementById('exampleModalCenter2')
+    );
+
+    this.formVehiculo = this.formBuilder.group({
+      idVehiculo: [''],
+      nombreVehiculo: ['', Validators.required],
+      idMarca: [''],
+      modelo: [''],
+      numeroSerieChasis: [''],
+      numeroMotor: [''],
+      color: [''],
+      tipoCombustible: [''],
+      capacidadTanque: [''],
+      rendimientoCombustible: [''],
+      placas: [''],
+      urlFoto: [''],
+      estatus: [''],
+    });
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -42,4 +212,23 @@ export class TablaVehiculosComponent implements AfterViewInit {
     });
   }
 
+  openModal() {
+    this.formModal.show();
+  }
+
+  closeModal() {
+    this.formModal.hide();
+  }
+
+  openModal2() {
+    this.formModal2.show();
+  }
+
+  closeModal2() {
+    this.formModal2.hide();
+  }
+
+  submitForm() {}
+
+  submitForm2() {}
 }
