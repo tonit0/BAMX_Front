@@ -36,17 +36,17 @@ const routes: Routes = [
         component: TablaRevisionesComponent,
       },
       {
+        path: 'vehiculos/fallas/:id',
+        component: TablaFallasComponent,
+      },
+      {
         path: 'proveedores',
         component: TablaProveedoresComponent,
       },
       {
         path: 'empleados',
         component: TablaEmpleadosComponent,
-      },
-      {
-        path: 'fallas',
-        component: TablaFallasComponent,
-      },
+      }
     ],
   },
   {
