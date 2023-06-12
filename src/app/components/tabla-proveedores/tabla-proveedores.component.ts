@@ -1,32 +1,8 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
-
-export interface PeriodicElement {
-  ID: number;
-  Nombre: string;
-  Telefono: number;
-  RFC: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-  {ID: 1, Nombre: 'Algo', Telefono: 1234567890, RFC: 'sakjdhasldg12312'},
-];
-
+import { proveedores } from 'src/app/models/proveedor';
+import { TablasService } from 'src/app/services/tablas.service';
 
 @Component({
   selector: 'app-tabla-proveedores',
@@ -36,21 +12,38 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class TablaProveedoresComponent implements AfterViewInit {
 
+  constructor( private TableService: TablasService ) {}
+
   tipo: boolean = false;
 
   displayedColumns: string[] = ['ID', 'Nombre', 'Telefono', 'RFC', 'Buttons'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<proveedores>;
+  data: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.obtenerProveedores();
   }
 
   hide_this( now: boolean ) {
 
     this.tipo = now;
 
+  }
+
+  obtenerProveedores(){
+    this.TableService.getProviders().subscribe({
+      error: (error) => {
+      },
+      complete: () => {},
+      next: (response) => {
+        this.data = response;
+        console.log( this.data);
+        this.dataSource = this.data;
+      },
+    });
   }
   
 

@@ -1,27 +1,8 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
-
-export interface PeriodicElement {
-  ID: number;
-  Tipo: string;
-  Proveedor: string;
-  Fecha: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-  {ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021'},
-];
+import { mantenimiento } from 'src/app/models/mantenimiento';
+import { TablasService } from 'src/app/services/tablas.service';
 
 @Component({
   selector: 'app-tabla-mantenimiento',
@@ -30,14 +11,30 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class TablaMantenimientoComponent implements AfterViewInit {
 
+  constructor( private TableService: TablasService ) {}
+
   displayedColumns: string[] = ['ID', 'Tipo', 'Proveedor', 'Fecha', 'Buttons'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<mantenimiento>;
+  data: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.obtenerMantenimiento();
   }
 
+  obtenerMantenimiento(){
+    this.TableService.getMaintenances().subscribe({
+      error: (error) => {
+      },
+      complete: () => {},
+      next: (response) => {
+        this.data = response;
+        console.log( this.data ) ;
+        this.dataSource = this.data;
+      },
+    });
+  }
 
 }

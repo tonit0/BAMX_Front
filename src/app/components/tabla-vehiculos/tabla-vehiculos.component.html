@@ -22,30 +22,30 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="ID">
                   <th mat-header-cell *matHeaderCellDef> ID </th>
-                  <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.id_vehiculo}} </td>
                 </ng-container>
               
                 <!-- Name Column -->
                 <ng-container matColumnDef="Marca">
                   <th mat-header-cell *matHeaderCellDef> Marca </th>
-                  <td mat-cell *matCellDef="let element"> {{element.Marca}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.marca.nombre}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Modelo">
                     <th mat-header-cell *matHeaderCellDef> Modelo </th>
-                    <td mat-cell *matCellDef="let element"> {{element.Modelo}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
                   </ng-container>
               
                 <!-- Weight Column -->
                 <ng-container matColumnDef="Color">
                   <th mat-header-cell *matHeaderCellDef> Color </th>
-                  <td mat-cell *matCellDef="let element"> {{element.Color}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.color}} </td>
                 </ng-container>
               
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="Placas">
                   <th mat-header-cell *matHeaderCellDef> Placas </th>
-                  <td mat-cell *matCellDef="let element"> {{element.Placas}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.placas}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="Buttons">
