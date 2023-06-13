@@ -14,14 +14,12 @@ export class TablaEmpleadosComponent implements AfterViewInit {
   constructor( private TableService: TablasService ) {}
 
   displayedColumns: string[] = ['ID', 'Nombre', 'Primer_Apellido', 'Telefono', 'Puesto', 'Buttons'];
-  dataSource = new MatTableDataSource<empleado>;
+  dataSource = new MatTableDataSource<empleado>();
   data: any;
 
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.obtenerEmpleado();
   }
 
@@ -33,7 +31,8 @@ export class TablaEmpleadosComponent implements AfterViewInit {
       next: (response) => {
         this.data = response;
         console.log( this.data ) ;
-        this.dataSource = this.data;
+        this.dataSource = new MatTableDataSource( this.data );
+        this.dataSource.paginator = this.paginator;
       },
     });
   }
