@@ -1,157 +1,14 @@
 import { ThisReceiver } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Vehiculos } from 'src/app/models/vehiculo';
 import { TablasService } from 'src/app/services/tablas.service';
+import { MatSort } from '@angular/material/sort';
 
 declare var window: any;
-export interface PeriodicElement {
-  ID: number;
-  Marca: string;
-  Modelo: string;
-  Color: string;
-  Placas: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-  {
-    ID: 1,
-    Marca: 'Algo',
-    Modelo: 'Algo 2.0',
-    Color: 'Rojo',
-    Placas: 'EGU-18-80',
-  },
-]
-
 @Component({
   selector: 'app-tabla-vehiculos',
   templateUrl: './tabla-vehiculos.component.html',
@@ -160,10 +17,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class TablaVehiculosComponent {
   formVehiculo!: FormGroup;
   displayedColumns: string[] = ['ID', 'Marca', 'Modelo', 'Color', 'Placas', 'Buttons'];
-  dataSource = new MatTableDataSource<Vehiculos>;
+  dataSource = new MatTableDataSource<Vehiculos>();
   data: any;
   
-  constructor(private formBuilder: FormBuilder, private TableService: TablasService ) {}
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(private formBuilder: FormBuilder, private TableService: TablasService ) { }
   formModal: any;
   formModal2: any;
   ngOnInit(): void {
@@ -192,10 +51,7 @@ export class TablaVehiculosComponent {
     });
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.obtenerVehiculos();
   }
 
@@ -206,8 +62,9 @@ export class TablaVehiculosComponent {
       complete: () => {},
       next: (response) => {
         this.data = response;
-        console.log( this.data[0].marca.nombre );
-        this.dataSource = this.data;
+        console.log( this.data );
+        this.dataSource = new MatTableDataSource( this.data );
+        this.dataSource.paginator = this.paginator;
       },
     });
   }

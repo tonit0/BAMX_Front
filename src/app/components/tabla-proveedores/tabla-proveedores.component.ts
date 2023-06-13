@@ -20,10 +20,9 @@ export class TablaProveedoresComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<proveedores>;
   data: any;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.obtenerProveedores();
   }
 
@@ -41,7 +40,8 @@ export class TablaProveedoresComponent implements AfterViewInit {
       next: (response) => {
         this.data = response;
         console.log( this.data);
-        this.dataSource = this.data;
+        this.dataSource = new MatTableDataSource( this.data );
+        this.dataSource.paginator = this.paginator;
       },
     });
   }
