@@ -1,17 +1,13 @@
-<div class="content">
+<div class="content" *ngIf="isEmployeePage">
 
     <div class="barraprincipal">
-
-        <h1> Proveedores </h1>
-    
-        <div class="top-buttons">
-            <button class="new"> <i class="fa-solid fa-circle-plus"></i> Nuevo </button>
-            <button class="new"> Puesto </button>
-        </div>
-
+      <h1> Empleados </h1>
+  
+      <div class="top-buttons">
+          <button class="new" (click)="openModal(false)"> <i class="fa-solid fa-circle-plus"></i> Nuevo </button>
+          <button class="new" (click)="isEmployeePage = false"> Puestos </button>
+      </div>
     </div>
-    
-    
         <div class="table">
 
             <button class="btn-search"> <i class="fa-solid fa-magnifying-glass"></i> </button>
@@ -47,20 +43,20 @@
 
                 <ng-container matColumnDef="Puesto">
                     <th mat-header-cell *matHeaderCellDef> Puesto </th>
-                    <td mat-cell *matCellDef="let element"> {{element.id_puesto}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.puesto.nombre}} </td>
                   </ng-container>
               
                 <ng-container matColumnDef="Buttons">
                     <th mat-header-cell *matHeaderCellDef>  </th>
                     <td mat-cell *matCellDef="let element" class="btns" style="text-align: right; padding-right: 3rem;">
-                         <button class="btn-icon"> <i class="fa-solid fa-pen"></i> </button>
+                         <button class="btn-icon" (click)="editEmpleado(element)"> <i class="fa-solid fa-pen"></i> </button>
                          <button class="btn-icon"> <i class="fa-solid fa-trash"></i></button>
                     </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>            </table>
-                <mat-paginator   [pageSizeOptions]="[5,10, 20,40]" showFirstLastButtons #paginator ></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[5,10, 20,40]" showFirstLastButtons #paginator ></mat-paginator>
 
             </section>
 
@@ -68,3 +64,145 @@
 
 </div>
 
+<div class="content" *ngIf="!isEmployeePage">
+
+  <div class="barraprincipal">
+    <h1> Puestos </h1>
+
+    <div class="top-buttons">
+        <button class="new" (click)="openModalPuesto(false)"> <i class="fa-solid fa-circle-plus"></i> Nuevo </button>
+        <button class="new" (click)="isEmployeePage = true"> Empleados </button>
+    </div>
+  </div>
+      <div class="table">
+
+          <button class="btn-search"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+
+          <section class="example-container" tabindex="0">
+          <table mat-table [dataSource]="dataSourcePuestos">
+
+              <ng-container matColumnDef="ID">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.id_puesto}} </td>
+              </ng-container>
+            
+              <!-- Name Column -->
+              <ng-container matColumnDef="Nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
+            
+              <ng-container matColumnDef="Buttons">
+                  <th mat-header-cell *matHeaderCellDef>  </th>
+                  <td mat-cell *matCellDef="let element" class="btns" style="text-align: right; padding-right: 3rem;">
+                       <button class="btn-icon" (click)="editPuesto(element)"> <i class="fa-solid fa-pen"></i> </button>
+                       <button class="btn-icon"> <i class="fa-solid fa-trash"></i></button>
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsPuestos; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsPuestos;"></tr>            </table>
+              <mat-paginator [pageSizeOptions]="[5,10, 20,40]" showFirstLastButtons #paginator ></mat-paginator>
+          </section>
+      </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 *ngIf="!isEditEmployee" class="modal-title" id="exampleModalLongTitle"> Registrar empleado</h2>
+        <h2 *ngIf="isEditEmployee" class="modal-title" id="exampleModalLongTitle"> Modificar empleado</h2>
+        <button class="closeModalButton" type="button" data-toggle="modal" (click)="closeModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="formEmpleado" (ngSubmit)="submitForm(isEditEmployee ? employeeEdit.id_empleado : undefined)">
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre" required>
+          </div>
+
+          <div class="form-group">
+            <label for="apellido1">Primer Apellido</label>
+            <input type="text" class="form-control" id="apellido1" formControlName="apellido1" placeholder="Primer Apellido">
+          </div>
+
+          <div class="form-group">
+            <label for="apellido2">Segundo Apellido</label>
+            <input type="text" class="form-control" id="apellido2" formControlName="apellido2" placeholder="Segundo Apellido">
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" formControlName="telefono" placeholder="Teléfono">
+          </div>
+
+          <div class="form-group">
+            <label for="correo">Correo</label>
+            <input type="email" class="form-control" id="correo" formControlName="correo" placeholder="Correo">
+          </div>
+
+          <div class="form-group">
+            <label for="id_puesto">Puesto</label>
+            <select class="form-control" id="id_puesto" formControlName="id_puesto" required>
+              <option *ngFor="let puesto of puestos" [value]="puesto.id_puesto">{{ puesto.nombre }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="RFC">RFC</label>
+            <input type="text" class="form-control" id="RFC" formControlName="RFC" placeholder="RFC">
+          </div>
+
+          <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input type="text" class="form-control" id="direccion" formControlName="direccion" placeholder="Dirección">
+          </div>
+
+          <div class="form-group">
+            <label for="curp">CURP</label>
+            <input type="text" class="form-control" id="curp" formControlName="curp" placeholder="CURP">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="closeModalButton">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenterPuesto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 *ngIf="!isEditPuesto" class="modal-title" id="exampleModalLongTitle"> Registrar puesto</h2>
+        <h2 *ngIf="isEditPuesto" class="modal-title" id="exampleModalLongTitle"> Modificar puesto</h2>
+        <button class="closeModalButton" type="button" data-toggle="modal" (click)="closeModalPuesto()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="formPuesto" (ngSubmit)="submitFormPuesto(isEditPuesto ? puestoEdit.id_puesto : undefined)">
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="closeModalButton">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -19,6 +19,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TablaProveedoresComponent } from './tabla-proveedores/tabla-proveedores.component';
 import { TablaEmpleadosComponent } from './tabla-empleados/tabla-empleados.component';
 import { TablaFallasComponent } from './tabla-fallas/tabla-fallas.component';
+import { TablaRutasComponent } from './tabla-rutas/tabla-rutas.component';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { TablaFallasComponent } from './tabla-fallas/tabla-fallas.component';
     TablaProveedoresComponent,
     TablaEmpleadosComponent,
     TablaFallasComponent,
-    
+    TablaRutasComponent
   ],
   imports: [
     CommonModule,

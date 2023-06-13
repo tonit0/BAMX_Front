@@ -10,6 +10,24 @@
     overflow: auto;
 }
 
+.closeModalButton {
+
+    background-color: #F29406;
+    color: white;
+    
+    padding: 0.4rem 1.5rem 0.4rem 1.5rem;
+    border: none;
+
+    display: flex;
+    gap: 15px;
+
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    border-radius: 10px 
+
+}
+
 .barraprincipal {
 
     width: 100%;
@@ -48,25 +66,6 @@ h1 {
     display: none !important;
 
 }
-
-.closeModalButton {
-
-    background-color: #F29406;
-    color: white;
-    
-    padding: 0.4rem 1.5rem 0.4rem 1.5rem;
-    border: none;
-
-    display: flex;
-    gap: 15px;
-
-    font-size: 1.2rem;
-    font-weight: bold;
-
-    border-radius: 10px 
-
-}
-
 
 
 .new {
@@ -124,7 +123,7 @@ table {
 }
 
 td {
-    width: 12%;
+    width: 13%;
 }
 
 .btn-icon {

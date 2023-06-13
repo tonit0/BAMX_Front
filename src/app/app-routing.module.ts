@@ -9,6 +9,7 @@ import { TablaProveedoresComponent } from './components/tabla-proveedores/tabla-
 import { TablaEmpleadosComponent } from './components/tabla-empleados/tabla-empleados.component';
 import { TablaFallasComponent } from './components/tabla-fallas/tabla-fallas.component';
 import { MenuPrincipalComponent } from './pages/menu-principal/menu-principal.component';
+import { TablaRutasComponent } from './components/tabla-rutas/tabla-rutas.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: 'empleados',
         component: TablaEmpleadosComponent,
+      },
+      {
+        path: 'rutas',
+        component: TablaRutasComponent,
       }
     ],
   },
