@@ -28,12 +28,13 @@ export class TablaEmpleadosComponent implements AfterViewInit {
   displayedColumns: string[] = ['ID', 'Nombre', 'Primer_Apellido', 'Telefono', 'Puesto', 'Buttons'];
   displayedColumnsPuestos: string[] = ['ID', 'Nombre', 'Estatus', 'Buttons'];
 
-
   empleadosAll: any;
   puestosAll: any;
   dataSource = new MatTableDataSource<empleado>;
   dataSourcePuestos = new MatTableDataSource;
   
+  dataSource = new MatTableDataSource<empleado>();
+
   data: any;
   puestos: any;
   formModal: any;

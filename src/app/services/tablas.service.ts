@@ -31,9 +31,9 @@ export class TablasService {
         );
   }
 
-  getRevisions():Observable <Revicion>{
+  getRevisions( id_veh: any ):Observable <Revicion>{
     return this.cliente
-        .get<Revicion>(this.urlApi + 'revisions')
+        .get<Revicion>(this.urlApi + 'revisions/'+ id_veh)
         .pipe(
           tap(() => {
             this.refresh.next();
@@ -51,9 +51,9 @@ export class TablasService {
         );
   }
 
-  getMaintenances():Observable <mantenimiento>{
+  getMaintenances( id_veh: any ):Observable <mantenimiento>{
     return this.cliente
-        .get<mantenimiento>(this.urlApi + 'maintenances')
+        .get<mantenimiento>(this.urlApi + 'maintenances/' + id_veh)
         .pipe(
           tap(() => {
             this.refresh.next();
@@ -61,9 +61,19 @@ export class TablasService {
         );
   }
 
-  getFailures():Observable <falla>{
+  getFailures_Concluded(  id_veh: any ):Observable <falla>{
     return this.cliente
-        .get<falla>(this.urlApi + 'veh_failures')
+        .get<falla>(this.urlApi + 'veh_failures/Concluded/' + id_veh )
+        .pipe(
+          tap(() => {
+            this.refresh.next();
+          })
+        );
+  }
+
+  getFailures_Unfinished(  id_veh: any ):Observable <falla>{
+    return this.cliente
+        .get<falla>(this.urlApi + 'veh_failures/Unfinished/' + id_veh )
         .pipe(
           tap(() => {
             this.refresh.next();

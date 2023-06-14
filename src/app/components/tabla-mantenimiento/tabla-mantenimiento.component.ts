@@ -6,27 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var window: any;
-export interface PeriodicElement {
-  ID: number;
-  Tipo: string;
-  Proveedor: string;
-  Fecha: string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-  { ID: 1, Tipo: 'Algo', Proveedor: 'Algo 2.0', Fecha: '19-12-2021' },
-];
 import { mantenimiento } from 'src/app/models/mantenimiento';
 import { TablasService } from 'src/app/services/tablas.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tabla-mantenimiento',
@@ -38,7 +21,8 @@ export class TablaMantenimientoComponent implements AfterViewInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private TableService: TablasService
+    private TableService: TablasService,
+    private router: ActivatedRoute
   ) {}
   formModal: any;
   formModal2: any;
@@ -70,21 +54,23 @@ export class TablaMantenimientoComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<mantenimiento>();
   data: any;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.obtenerMantenimiento();
   }
 
   obtenerMantenimiento() {
-    this.TableService.getMaintenances().subscribe({
+    console.log( this.router.snapshot.paramMap.get('id') );
+    this.TableService.getMaintenances( this.router.snapshot.paramMap.get('id') ).subscribe({
       error: (error) => {},
       complete: () => {},
       next: (response) => {
         this.data = response;
         console.log(this.data);
-        this.dataSource = this.data;
+        this.dataSource = new MatTableDataSource( this.data );
+        this.dataSource.paginator = this.paginator;
+
       },
     });
   }
