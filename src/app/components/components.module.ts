@@ -13,12 +13,13 @@ import { TablaRevisionesComponent } from './tabla-revisiones/tabla-revisiones.co
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { TablaProveedoresComponent } from './tabla-proveedores/tabla-proveedores.component';
 import { TablaEmpleadosComponent } from './tabla-empleados/tabla-empleados.component';
 import { TablaFallasComponent } from './tabla-fallas/tabla-fallas.component';
+import { TablaRutasComponent } from './tabla-rutas/tabla-rutas.component';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { TablaFallasComponent } from './tabla-fallas/tabla-fallas.component';
     TablaProveedoresComponent,
     TablaEmpleadosComponent,
     TablaFallasComponent,
-    
+    TablaRutasComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +46,8 @@ import { TablaFallasComponent } from './tabla-fallas/tabla-fallas.component';
     ScrollingModule,
     MatDialogModule,
     MatMenuModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     EncabezadoComponent,

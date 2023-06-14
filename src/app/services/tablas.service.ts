@@ -81,6 +81,26 @@ export class TablasService {
         );
   }
 
+  getTrails():Observable <falla>{
+    return this.cliente
+        .get<falla>(this.urlApi + 'trails')
+        .pipe(
+          tap(() => {
+            this.refresh.next();
+          })
+        );
+  }
+
+  insertTrail(form: any) {
+    return this.cliente
+    .post(this.urlApi + 'trails', form);
+  }
+
+  updateTrail(id: any, form: any) {
+    return this.cliente
+    .put(this.urlApi + 'trails/' + id, form);
+  }
+
   getEmployees():Observable <empleado>{
     return this.cliente
         .get<empleado>(this.urlApi + 'employees')
@@ -89,6 +109,36 @@ export class TablasService {
             this.refresh.next();
           })
         );
+  }
+
+  insertEmployee(form: any) {
+    return this.cliente
+    .post<empleado>(this.urlApi + 'employees', form);
+  }
+
+  updateEmployee(id: any, form: any) {
+    return this.cliente
+    .put<empleado>(this.urlApi + 'employees/' + id, form);
+  }
+
+  getPositions():Observable <empleado>{
+    return this.cliente
+        .get<empleado>(this.urlApi + 'positions')
+        .pipe(
+          tap(() => {
+            this.refresh.next();
+          })
+        );
+  }
+
+  insertPosition(form: any) {
+    return this.cliente
+    .post(this.urlApi + 'positions', form);
+  }
+
+  updatePosition(id: any, form: any) {
+    return this.cliente
+    .put(this.urlApi + 'positions/' + id, form);
   }
 
 }
