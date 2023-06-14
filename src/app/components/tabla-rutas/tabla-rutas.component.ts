@@ -19,7 +19,7 @@ export class TablaRutasComponent implements AfterViewInit {
 
   tipo: boolean = false;
   formModalRuta: any;
-
+  rutasAll: any;
   displayedColumns: string[] = ['ID', 'Nombre', 'Direccion', 'Buttons'];
   dataSource = new MatTableDataSource;
   data: any;
@@ -29,6 +29,9 @@ export class TablaRutasComponent implements AfterViewInit {
   rutaEdit: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  showSearchInput: boolean = false;
+  searchTerm: string = "";
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -66,10 +69,41 @@ export class TablaRutasComponent implements AfterViewInit {
     this.openModalRuta(true);
   }
 
+  changeStatusRuta(ruta: any){
+    var new_estatus = ruta.estatus == "A" ? "B" : "A";
+    const formValue = { estatus: new_estatus };
+    this.TableService.updateTrail(ruta.id_ruta, formValue).subscribe(
+      (response) => {
+        this.obtenerRutas();
+        // alert("puesto modificado")
+      },
+      (error) => {
+        alert('Error al modificar la ruta');
+      }
+    );
+  }
+
   closeModalRuta(){
     this.formModalRuta.hide();
   }
 
+  search(): void {
+
+    const data = this.rutasAll.filter((item: any) => (
+      item.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
+      || item.direccion.toLowerCase().includes(this.searchTerm.toLowerCase())
+    ));
+    this.dataSource = new MatTableDataSource( data );
+
+  }
+
+  toggleSearchInput(): void {
+    this.showSearchInput = !this.showSearchInput;
+    if(!this.showSearchInput){
+      this.searchTerm = "";
+      this.search();
+    }
+  }
 
   hide_this( now: boolean ) {
 
@@ -84,6 +118,7 @@ export class TablaRutasComponent implements AfterViewInit {
       complete: () => {},
       next: (response) => {
         this.data = response;
+        this.rutasAll = this.data;
         this.dataSource = this.data;
       },
     });

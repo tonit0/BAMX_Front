@@ -15,6 +15,7 @@ declare var window: any;
 export class TablaEmpleadosComponent implements AfterViewInit {
   formEmpleado!: FormGroup;
   formPuesto!: FormGroup;
+  formLicencia!: FormGroup;
 
   constructor( 
     private formBuilder: FormBuilder, 
@@ -25,8 +26,11 @@ export class TablaEmpleadosComponent implements AfterViewInit {
   isEmployeePage: boolean = true;
 
   displayedColumns: string[] = ['ID', 'Nombre', 'Primer_Apellido', 'Telefono', 'Puesto', 'Buttons'];
-  displayedColumnsPuestos: string[] = ['ID', 'Nombre', 'Buttons'];
+  displayedColumnsPuestos: string[] = ['ID', 'Nombre', 'Estatus', 'Buttons'];
 
+
+  empleadosAll: any;
+  puestosAll: any;
   dataSource = new MatTableDataSource<empleado>;
   dataSourcePuestos = new MatTableDataSource;
   
@@ -41,7 +45,15 @@ export class TablaEmpleadosComponent implements AfterViewInit {
   employeeEdit: any;
   puestoEdit: any;
 
+  selectedTipoLicencia: String = "";
+  isLicencia: boolean = true;
+  tipos_licencia = [{tipo: "Licencia A"}, {tipo: "Licencia B"}, {tipo: "Licencia C"}];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginatorPuestos!: MatPaginator;
+
+  showSearchInput: boolean = false;
+  searchTerm: string = "";
 
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
@@ -62,6 +74,9 @@ export class TablaEmpleadosComponent implements AfterViewInit {
       RFC: ['', [Validators.required, Validators.minLength(13), Validators.maxLength(13)]],
       direccion: [''],
       curp: ['', [Validators.required, Validators.minLength(18), Validators.maxLength(18)]],
+      tipo_licencia: [''],
+      fecha_expedicion: [''],
+      fecha_vencimiento: [''],
       estatus: ['A']
     });
 
@@ -73,9 +88,40 @@ export class TablaEmpleadosComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSourcePuestos.paginator = this.paginatorPuestos;
+
     this.obtenerEmpleado();
     this.obtenerPuestos();
     
+  }
+
+  search(): void {
+
+    if(this.isEmployeePage){
+      const data = this.empleadosAll.filter((item: any) => (
+        item.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
+        || item.apellido1.toLowerCase().includes(this.searchTerm.toLowerCase())
+        || item.apellido2.toLowerCase().includes(this.searchTerm.toLowerCase())
+        || item.telefono.toLowerCase().includes(this.searchTerm.toLowerCase())
+        || item.puesto.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
+      ));
+      this.dataSource = new MatTableDataSource( data );
+
+    }else{
+      const data = this.puestosAll.filter((item: any) => (
+        item.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
+      ));
+      this.dataSourcePuestos = new MatTableDataSource( data );
+    }
+
+  }
+
+  toggleSearchInput(): void {
+    this.showSearchInput = !this.showSearchInput;
+    if(!this.showSearchInput){
+      this.searchTerm = "";
+      this.search();
+    }
   }
 
   obtenerPuestos(){
@@ -85,7 +131,9 @@ export class TablaEmpleadosComponent implements AfterViewInit {
       complete: () => {},
       next: (response) => {
         this.data = response;
-        this.dataSourcePuestos = this.data;
+        this.puestosAll = this.data;
+        this.dataSourcePuestos = new MatTableDataSource( this.data );
+        this.dataSourcePuestos.paginator = this.paginatorPuestos;
         this.puestos = this.data.filter((puesto: any) => puesto.estatus === 'A');
       },
     });
@@ -98,8 +146,9 @@ export class TablaEmpleadosComponent implements AfterViewInit {
       complete: () => {},
       next: (response) => {
         this.data = response;
-        console.log( this.data ) ;
-        this.dataSource = this.data;
+        this.empleadosAll = this.data;
+        this.dataSource = new MatTableDataSource( this.data );
+        this.dataSource.paginator = this.paginator;
       },
     });
   }
@@ -149,6 +198,32 @@ export class TablaEmpleadosComponent implements AfterViewInit {
     this.openModalPuesto(true);
   }
 
+  changeStatusPuesto(puesto: any){
+    var new_estatus = puesto.estatus == "A" ? "B" : "A";
+    const formValue = { estatus: new_estatus };
+    this.TableService.updatePosition(puesto.id_puesto, formValue).subscribe(
+      (response) => {
+        this.obtenerPuestos();
+      },
+      (error) => {
+        alert('Error al modificar el puesto');
+      }
+    );
+  }
+
+  changeStatusEmpleado(empleado: any){
+    var new_estatus = empleado.estatus == "A" ? "B" : "A";
+    const formValue = { estatus: new_estatus };
+    this.TableService.updateEmployee(empleado.id_empleado, formValue).subscribe(
+      (response) => {
+        this.obtenerEmpleado();
+      },
+      (error) => {
+        alert('Error al modificar el empleado');
+      }
+    );
+  }
+
   closeModal(){
     this.formModal.hide();
   }
@@ -158,13 +233,24 @@ export class TablaEmpleadosComponent implements AfterViewInit {
   }
 
   submitForm(id_empleado: any){
-
+    
     if(this.formEmpleado.valid){
+
       const formValue = this.formEmpleado.value;
+      if(this.isLicencia && (formValue.tipo_licencia == null || formValue.fecha_expedicion == null || formValue.fecha_vencimiento == null)){
+        alert("datos invalidos")
+        return;
+      }
+
+      if(!this.isLicencia){
+        formValue.tipo_licencia = null;
+        formValue.fecha_expedicion = null;
+        formValue.fecha_vencimiento = null;
+      }
+      // console.log(formValue)
       formValue.id_puesto = parseInt(formValue.id_puesto, 10);
       formValue.estatus = "A";
       if(id_empleado){
-        console.log(id_empleado)
         this.TableService.updateEmployee(id_empleado, formValue).subscribe(
           (response) => {
             console.log('Empleado modificado correctamente', response);
@@ -193,7 +279,6 @@ export class TablaEmpleadosComponent implements AfterViewInit {
       alert("datos invalidos")
     }
 
-    
   }
 
   submitFormPuesto(id_puesto: any){
@@ -232,5 +317,9 @@ export class TablaEmpleadosComponent implements AfterViewInit {
       alert("datos invalidos")
     }
 
+  }
+
+  changeIsLicencia(change: boolean){
+    this.isLicencia = change;
   }
 }

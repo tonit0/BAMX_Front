@@ -13,7 +13,7 @@ import { TablaRevisionesComponent } from './tabla-revisiones/tabla-revisiones.co
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { TablaProveedoresComponent } from './tabla-proveedores/tabla-proveedores.component';
@@ -46,7 +46,8 @@ import { TablaRutasComponent } from './tabla-rutas/tabla-rutas.component';
     ScrollingModule,
     MatDialogModule,
     MatMenuModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     EncabezadoComponent,
