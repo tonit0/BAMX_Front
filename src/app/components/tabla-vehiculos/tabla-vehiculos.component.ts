@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Vehiculos } from 'src/app/models/vehiculo';
 import { TablasService } from 'src/app/services/tablas.service';
 import { MatSort } from '@angular/material/sort';
+import { Brand } from 'src/app/models/brand';
+import { environment } from 'src/environments/environment';
 
 declare var window: any;
 @Component({
@@ -16,54 +18,86 @@ declare var window: any;
 })
 export class TablaVehiculosComponent {
   formVehiculo!: FormGroup;
-  displayedColumns: string[] = ['ID', 'Marca', 'Modelo', 'Color', 'Placas', 'Buttons'];
+  displayedColumns: string[] = [
+    'ID',
+    'Marca',
+    'Modelo',
+    'Color',
+    'Placas',
+    'Buttons',
+  ];
   dataSource = new MatTableDataSource<Vehiculos>();
   data: any;
-  
+  selectedId: any;
+  img_url: any;
+  marcas: Brand[] = [];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private formBuilder: FormBuilder, private TableService: TablasService ) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private TableService: TablasService
+  ) {}
+
   formModal: any;
   formModal2: any;
+
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
-      document.getElementById('exampleModalCenter')
+      document.getElementById('insertModal')
     );
 
     this.formModal2 = new window.bootstrap.Modal(
-      document.getElementById('exampleModalCenter2')
+      document.getElementById('updateModal')
     );
 
+    this.initiateForm();
+  }
+
+  initiateForm() {
     this.formVehiculo = this.formBuilder.group({
-      idVehiculo: [''],
-      nombreVehiculo: ['', Validators.required],
-      idMarca: [''],
-      modelo: [''],
-      numeroSerieChasis: [''],
-      numeroMotor: [''],
-      color: [''],
-      tipoCombustible: [''],
-      capacidadTanque: [''],
-      rendimientoCombustible: [''],
-      placas: [''],
-      urlFoto: [''],
-      estatus: [''],
+      nombre_vehiculo: ['', Validators.required],
+      id_marca: ['', Validators.required],
+      modelo: ['', Validators.required],
+      numero_serie_chasis: ['', Validators.required],
+      numero_motor: ['', Validators.required],
+      color: ['', Validators.required],
+      tipo_combustible: ['', Validators.required],
+      capacidad_tanque: ['', Validators.required],
+      rendimiento_combustible: ['', Validators.required],
+      placas: ['', Validators.required],
+      image: [''],
+      estatus: ['A'],
+      cambio_de_aceite: ['', Validators.required],
+      afinacion: ['', Validators.required],
+      frenos: ['', Validators.required],
+      arranque_y_alternador: ['', Validators.required],
     });
   }
 
   ngAfterViewInit() {
     this.obtenerVehiculos();
+    this.obtenerMarcas();
   }
 
-  obtenerVehiculos(){
-    this.TableService.getVehicles().subscribe({
-      error: (error) => {
+  obtenerMarcas() {
+    this.TableService.getBrands().subscribe({
+      error: (error) => {},
+      complete: () => {},
+      next: (response) => {
+        this.marcas = response;
+        // console.log(response);
       },
+    });
+  }
+
+  obtenerVehiculos() {
+    this.TableService.getVehicles().subscribe({
+      error: (error) => {},
       complete: () => {},
       next: (response) => {
         this.data = response;
-        console.log( this.data );
-        this.dataSource = new MatTableDataSource( this.data );
+        this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.paginator = this.paginator;
       },
     });
@@ -77,15 +111,94 @@ export class TablaVehiculosComponent {
     this.formModal.hide();
   }
 
-  openModal2() {
+  openModal2(data: any) {
     this.formModal2.show();
+
+    this.formVehiculo = this.formBuilder.group({
+      nombre_vehiculo: [data.nombre_vehiculo, Validators.required],
+      id_marca: [data.marca.id_marca, Validators.required],
+      modelo: [data.modelo, Validators.required],
+      numero_serie_chasis: [data.numero_serie_chasis, Validators.required],
+      numero_motor: [data.numero_motor, Validators.required],
+      color: [data.color, Validators.required],
+      tipo_combustible: [data.tipo_combustible, Validators.required],
+      capacidad_tanque: [data.capacidad_tanque, Validators.required],
+      rendimiento_combustible: [
+        data.rendimiento_combustible,
+        Validators.required,
+      ],
+      placas: [data.placas, Validators.required],
+      image: [''],
+      estatus: [data.estatus],
+      cambio_de_aceite: [data.cambio_de_aceite, Validators.required],
+      afinacion: [data.afinacion, Validators.required],
+      frenos: [data.frenos, Validators.required],
+      arranque_y_alternador: [data.arranque_y_alternador, Validators.required],
+    });
+
+    this.selectedId = data.id_vehiculo;
+    this.img_url = environment.api_url + 'vehiculos/' + data.url_foto;
   }
 
   closeModal2() {
     this.formModal2.hide();
+    this.initiateForm();
   }
 
-  submitForm() {}
+  convertToFormData(formValue: any, nameInputFile: string = "") {
+    const formData = new FormData();
+    for (const [key, value] of Object.entries<any>(formValue)) {
+      if (key === 'image') {
+        const imagenInput = document.getElementById(
+          nameInputFile ?? 'uploadFile'
+        ) as HTMLInputElement;
 
-  submitForm2() {}
+        const imageFiles: FileList | null = imagenInput.files;
+
+        Array.from(imageFiles ?? []).forEach((file: File) => {
+          formData.append(key, file, file.name);
+        });
+      } else {
+        formData.append(key, value);
+      }
+    }
+    return formData;
+  }
+
+  submitInsert() {
+    let values = this.formVehiculo.value;
+
+    values = this.convertToFormData(values);
+
+    this.TableService.insertVehicle(values).subscribe(
+      (response: any) => {
+        console.log('Vehiculo registrado correctamente', response);
+        this.obtenerVehiculos();
+        alert(response.message);
+        this.closeModal();
+      },
+      (error) => {
+        alert('Error al registrar el Vehiculo');
+      }
+    );
+  }
+
+  submitUpdate() {
+    let values = this.formVehiculo.value;
+    console.log(values);
+    
+    values = this.convertToFormData(values, "imageUpdate");
+
+    this.TableService.updateVehicle(this.selectedId, values).subscribe(
+      (response: any) => {
+        console.log('Vehiculo actualizado correctamente', response);
+        this.obtenerVehiculos();
+        alert(response.message);
+        this.closeModal2();
+      },
+      (error) => {
+        alert('Error al actualizar el Vehiculo');
+      }
+    );
+  }
 }

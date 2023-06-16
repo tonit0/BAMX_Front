@@ -2,20 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { vehiculosModel } from '../models/vehiculosModel';
-import { Revicion } from '../models/revision';
+import { Revision } from '../models/revision';
 import { proveedores } from '../models/proveedor';
 import { mantenimiento } from '../models/mantenimiento';
 import { falla } from '../models/fallas';
 import { empleado } from '../models/empleado';
 import { entradas_salida } from '../models/entrada-salida';
 import { ruta } from '../models/rutas';
+import { Brand } from '../models/brand';
+import { Vehiculos } from '../models/vehiculo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TablasService {
 
-  urlApi: string = 'http://localhost:2023/';
+  urlApi: string = 'http://localhost:2024/';
   private _refresh$ = new Subject<void>();
   get refresh() {
     return this._refresh$;
@@ -33,9 +35,19 @@ export class TablasService {
         );
   }
 
-  getRevisions( id_veh: any ):Observable <Revicion>{
+  insertVehicle(form: any) {
     return this.cliente
-        .get<Revicion>(this.urlApi + 'revisions/'+ id_veh)
+    .post<Vehiculos>(this.urlApi + 'vehicles', form);
+  }
+
+  updateVehicle(id: any, form: any) {
+    return this.cliente
+    .put<Vehiculos>(this.urlApi + 'vehicles/' + id, form);
+  }
+
+  getRevisions( id_veh: any ):Observable <Revision>{
+    return this.cliente
+        .get<Revision>(this.urlApi + 'revisions/'+ id_veh)
         .pipe(
           tap(() => {
             this.refresh.next();
@@ -86,6 +98,16 @@ export class TablasService {
   getTrails():Observable <falla>{
     return this.cliente
         .get<falla>(this.urlApi + 'trails')
+        .pipe(
+          tap(() => {
+            this.refresh.next();
+          })
+        );
+  }
+
+  getBrands():Observable <Brand[]>{
+    return this.cliente
+        .get<Brand[]>(this.urlApi + 'brands')
         .pipe(
           tap(() => {
             this.refresh.next();
