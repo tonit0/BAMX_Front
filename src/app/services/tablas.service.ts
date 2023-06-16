@@ -7,6 +7,8 @@ import { proveedores } from '../models/proveedor';
 import { mantenimiento } from '../models/mantenimiento';
 import { falla } from '../models/fallas';
 import { empleado } from '../models/empleado';
+import { entradas_salida } from '../models/entrada-salida';
+import { ruta } from '../models/rutas';
 
 @Injectable({
   providedIn: 'root'
@@ -141,4 +143,28 @@ export class TablasService {
     .put(this.urlApi + 'positions/' + id, form);
   }
 
+  getInt_Out():Observable <entradas_salida> {
+    return this.cliente
+    .get<entradas_salida>(this.urlApi + 'inputs_outputs')
+    .pipe(
+      tap(() => {
+        this.refresh.next();
+      })
+    );
+  }
+
+  updateInputOutput(id: any, form: any) {
+    return this.cliente
+    .put(this.urlApi + 'inputs_outputs/' + id, form);
+  }
+
+  getRoute():Observable <ruta> {
+    return this.cliente
+    .get<ruta>(this.urlApi + 'trails/')
+    .pipe(
+      tap(() => {
+        this.refresh.next();
+      })
+    );
+  }
 }

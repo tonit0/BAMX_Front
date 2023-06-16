@@ -20,6 +20,7 @@ import { TablaProveedoresComponent } from './tabla-proveedores/tabla-proveedores
 import { TablaEmpleadosComponent } from './tabla-empleados/tabla-empleados.component';
 import { TablaFallasComponent } from './tabla-fallas/tabla-fallas.component';
 import { TablaRutasComponent } from './tabla-rutas/tabla-rutas.component';
+import { TablaEntradasSalidasComponent } from './tabla-entradas-salidas/tabla-entradas-salidas.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { TablaRutasComponent } from './tabla-rutas/tabla-rutas.component';
     TablaProveedoresComponent,
     TablaEmpleadosComponent,
     TablaFallasComponent,
-    TablaRutasComponent
+    TablaRutasComponent,
+    TablaEntradasSalidasComponent
   ],
   imports: [
     CommonModule,

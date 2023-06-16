@@ -30,7 +30,6 @@ export class TablaEmpleadosComponent implements AfterViewInit {
 
   empleadosAll: any;
   puestosAll: any;
-  dataSource = new MatTableDataSource<empleado>;
   dataSourcePuestos = new MatTableDataSource;
   
   dataSource = new MatTableDataSource<empleado>();
