@@ -113,7 +113,6 @@ export class TablaVehiculosComponent {
 
   openModal2(data: any) {
     this.formModal2.show();
-    console.log(data);
 
     this.formVehiculo = this.formBuilder.group({
       nombre_vehiculo: [data.nombre_vehiculo, Validators.required],
@@ -138,7 +137,7 @@ export class TablaVehiculosComponent {
     });
 
     this.selectedId = data.id_vehiculo;
-    this.img_url = environment.api_url + 'files/vehiculos/' + data.url_foto;
+    this.img_url = environment.api_url + 'vehiculos/' + data.url_foto;
   }
 
   closeModal2() {
@@ -146,12 +145,12 @@ export class TablaVehiculosComponent {
     this.initiateForm();
   }
 
-  convertToFormData(formValue: any) {
+  convertToFormData(formValue: any, nameInputFile: string = "") {
     const formData = new FormData();
     for (const [key, value] of Object.entries<any>(formValue)) {
       if (key === 'image') {
         const imagenInput = document.getElementById(
-          'uploadFile'
+          nameInputFile ?? 'uploadFile'
         ) as HTMLInputElement;
 
         const imageFiles: FileList | null = imagenInput.files;
@@ -186,8 +185,9 @@ export class TablaVehiculosComponent {
 
   submitUpdate() {
     let values = this.formVehiculo.value;
-
-    values = this.convertToFormData(values);
+    console.log(values);
+    
+    values = this.convertToFormData(values, "imageUpdate");
 
     this.TableService.updateVehicle(this.selectedId, values).subscribe(
       (response: any) => {
