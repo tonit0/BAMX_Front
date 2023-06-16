@@ -1,0 +1,153 @@
+<div class="content">
+
+    <div class="barraprincipal">
+
+        <h1> Vehiculos </h1>
+    
+    </div>
+    
+    
+        <div class="table">
+
+          <button class="btn-search"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+
+          <section class="example-container" >
+            <table mat-table [dataSource]="dataSource">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+              
+                <!-- Position Column -->
+                <ng-container matColumnDef="ID">
+                  <th mat-header-cell *matHeaderCellDef> ID </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id_entrada_salida}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="Vehiculo">
+                  <th mat-header-cell *matHeaderCellDef> Vehiculo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id_vehiculo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Ruta">
+                    <th mat-header-cell *matHeaderCellDef> Ruta </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id_ruta}} </td>
+                  </ng-container>
+              
+                <ng-container matColumnDef="Hora de salida">
+                    <th mat-header-cell *matHeaderCellDef> Hora de salida </th>
+                    <td mat-cell *matCellDef="let element"> {{element.hora_salida}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="Hora de entrada">
+                  <th mat-header-cell *matHeaderCellDef> Hora de entrada </th>
+                  <td mat-cell *matCellDef="let element"> {{element.hora_entrada}} </td>
+                </ng-container>
+              
+                <!-- Symbol Column -->
+
+              
+                <ng-container matColumnDef="Buttons">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element" class="btns">
+                        <button (click)="openInputs( element.id_entrada_salida )" class="btn-icon"> <i class="fa-solid fa-warehouse"></i> </button>
+                         <button (click)="openOutputs( element.id_entrada_salida )" class="btn-icon"> <i class="fa-solid fa-truck-fast"></i> </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>            
+            </table>
+            <mat-paginator   [pageSizeOptions]="[5,10, 20,40]" showFirstLastButtons aria-label="Select page of periodic elements" ></mat-paginator>         
+          </section>
+        </div>
+
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalInputs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" > Registra entrada </h2>
+        <button class="closeModalButton" type="button"  data-toggle="modal" (click)="closeInputs()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="formEntrada" (ngSubmit)="updateInputs()" >
+
+        <div class="modal-body">
+          
+          
+          <div class="form-group">
+            <label for="fecha_entrada"> Fecha de entrada </label>
+            <input type="datetime-local" class="form-control" id="fecha_entrada" name="fecha_entrada" [value]="post.toISOString().substring(0, 16)" min="2023-01-07T00:00">
+          </div>
+          
+          <div class="form-group">
+            <label for="litros_consumidos"> Litros consumidos </label>
+            <input type="number" min="0" max="9999.99" class="form-control" id="litros_consumidos" formControlName="litros_consumidos" placeholder="Litros consumidos" >
+          </div>
+          
+          <div class="form-group">
+            <label for="importe"> Importe </label>
+            <input type="number" class="form-control" id="importe" formControlName="importe" placeholder="Importe">
+          </div>
+           
+          <div class="form-group">
+            <label for="kilometraje"> Kilometraje </label>
+            <input type="number" class="form-control" id="kilometraje" formControlName="kilometraje" placeholder="Kilometraje">
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          
+          <button type="submit" class="closeModalButton" > Gurdar entrada </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalOutputs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" >Modificar vehiculo</h2>
+        <button class="closeModalButton" type="button"  data-toggle="modal" (click)="closeOutputs()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="formSalida" (ngSubmit)="updateOutput()" >
+
+        <div class="modal-body">
+                   
+            <div class="form-group">
+                <label for="hora_salida"> Fecha de salida </label>
+                <input type="datetime-local" class="form-control" id="hora_salida" name="hora_salida" [value]="post.toISOString().substring(0, 16)" min="2023-01-07T00:00">
+            </div>
+
+            <div class="form-group">
+                <label for="id_ruta"> Ruta </label>
+                <select class="form-control" id="id_ruta" formControlName="id_ruta" required>
+                    <option *ngFor="let ruta of rutas" [value]="ruta.id_ruta">{{ ruta.nombre }}</option>
+                </select>
+            </div>
+  
+        </div>
+        <div class="modal-footer">
+          
+          <button type="submit" class="closeModalButton" > Gurdar Salida </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
