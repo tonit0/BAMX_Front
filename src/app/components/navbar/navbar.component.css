@@ -21,6 +21,7 @@ article{
 }
 
 aside{
+    min-width: 128px;
     width: 8%;
     background-color: #FCFCFC;
     display: flex;

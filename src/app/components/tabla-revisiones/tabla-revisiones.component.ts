@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { Revicion } from 'src/app/models/revision';
+import { Revision } from 'src/app/models/revision';
 import { TablasService } from 'src/app/services/tablas.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class TablaRevisionesComponent implements AfterViewInit {
   constructor( private TableService: TablasService, private router: ActivatedRoute ) { }
 
   displayedColumns: string[] = ['ID', 'Fecha', 'Hora', 'Conductor', 'Destiono', 'Buttons'];
-  dataSource = new MatTableDataSource<Revicion>;
+  dataSource = new MatTableDataSource<Revision>;
   data: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
