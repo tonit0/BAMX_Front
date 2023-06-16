@@ -1,65 +1,193 @@
 <div class="content">
 
-    <div class="barraprincipal">
+  <div class="barraprincipal">
 
-        <h1> Proveedores </h1>
-    
-        <div class="top-buttons">
-            <button class="new"> <i class="fa-solid fa-circle-plus"></i> Nuevo </button>
-            <button (click)="hide_this( false )" class="new" [ngClass] = " {hidden: (tipo === false) ? true : false} "> Productos </button>
-            <button (click)="hide_this( true )" class="new" [ngClass] = " {hidden: (tipo === false) ? false : true} "> Servicios </button>
-        </div>
+    <h1> Proveedores </h1>
 
+    <div class="top-buttons">
+      <button (click)=" openModal()" class="new"> <i class="fa-solid fa-circle-plus"></i> Nuevo </button>
+      <button (click)="hide_this( false )" class="new" [ngClass]=" {hidden: (tipo === false) ? true : false} ">
+        Productos </button>
+      <button (click)="hide_this( true )" class="new" [ngClass]=" {hidden: (tipo === false) ? false : true} "> Servicios
+      </button>
     </div>
-    
-    
-        <div class="table">
 
-            <button class="btn-search"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+  </div>
 
-            <section class="example-container" tabindex="0">
-            <table mat-table [dataSource]="dataSource">
 
-                <!--- Note that these columns can be defined in any order.
+  <div class="table">
+
+    <button class="btn-search"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+
+    <section class="example-container" tabindex="0">
+      <table mat-table [dataSource]="dataSource">
+
+        <!--- Note that these columns can be defined in any order.
                       The actual rendered columns are set as a property on the row definition" -->
-              
-                <!-- Position Column -->
-                <ng-container matColumnDef="ID">
-                  <th mat-header-cell *matHeaderCellDef> ID </th>
-                  <td mat-cell *matCellDef="let element"> {{element.id_proveedor}} </td>
-                </ng-container>
-              
-                <!-- Name Column -->
-                <ng-container matColumnDef="Nombre">
-                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                  <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                </ng-container>
 
-                <ng-container matColumnDef="Telefono">
-                    <th mat-header-cell *matHeaderCellDef> Telefono </th>
-                    <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
-                  </ng-container>
-              
-                <!-- Weight Column -->
-                <ng-container matColumnDef="RFC">
-                  <th mat-header-cell *matHeaderCellDef> RFC </th>
-                  <td mat-cell *matCellDef="let element"> {{element.RFC}} </td>
-                </ng-container>
-              
-                <ng-container matColumnDef="Buttons">
-                    <th mat-header-cell *matHeaderCellDef>  </th>
-                    <td mat-cell *matCellDef="let element" class="btns" style="text-align: right; padding-right: 3rem;">
-                         <button class="btn-icon"> <i class="fa-solid fa-pen"></i> </button>
-                    </td>
-                </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id_proveedor}} </td>
+        </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>            </table>
-                <mat-paginator   [pageSizeOptions]="[5,10, 20,40]" showFirstLastButtons #paginator ></mat-paginator>
+        <!-- Name Column -->
+        <ng-container matColumnDef="Nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
 
-            </section>
+        <ng-container matColumnDef="Telefono">
+          <th mat-header-cell *matHeaderCellDef> Telefono </th>
+          <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+        </ng-container>
 
-        </div>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="RFC">
+          <th mat-header-cell *matHeaderCellDef> RFC </th>
+          <td mat-cell *matCellDef="let element"> {{element.RFC}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Buttons">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element" class="btns" style="text-align: right; padding-right: 3rem;">
+            <button (click)="openModal2()" class="btn-icon"> <i class="fa-solid fa-pen"></i> </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5,10, 20,40]" showFirstLastButtons #paginator></mat-paginator>
+
+    </section>
+
+  </div>
 
 </div>
 
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" >Modificar Proveedor</h2>
+        <button class="closeModalButton" type="button"  data-toggle="modal" (click)="closeModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+     
+      <form [formGroup]="formProveedores" (ngSubmit)="submitForm()">
+
+        <div class="modal-body">
+
+
+          <div class="form-group">
+            <label for="id_proveedor">ID Proveedor</label>
+            <input type="text" class="form-control" id="id_proveedor" formControlName="id_proveedor">
+          </div>
+
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre">
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" formControlName="telefono">
+          </div>
+
+          <div class="form-group">
+            <label for="correo">Correo</label>
+            <input type="text" class="form-control" id="correo" formControlName="correo">
+          </div>
+
+          <div class="form-group">
+            <label for="RFC">RFC</label>
+            <input type="text" class="form-control" id="RFC" formControlName="RFC">
+          </div>
+
+          <div class="form-group">
+            <label for="estatus">Estatus</label>
+            <input type="text" class="form-control" id="estatus" formControlName="estatus">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit" class="closeModalButton">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" >Modificar vehiculo</h2>
+        <button class="closeModalButton" type="button"  data-toggle="modal" (click)="closeModal2()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="formProveedores" (ngSubmit)="submitForm2()">
+
+        <div class="modal-body">
+
+
+          <div class="form-group">
+            <label for="id_proveedor">ID Proveedor</label>
+            <input type="text" class="form-control" id="id_proveedor" formControlName="id_proveedor">
+          </div>
+
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre">
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" formControlName="telefono">
+          </div>
+
+          <div class="form-group">
+            <label for="correo">Correo</label>
+            <input type="text" class="form-control" id="correo" formControlName="correo">
+          </div>
+
+          <div class="form-group">
+            <label for="RFC">RFC</label>
+            <input type="text" class="form-control" id="RFC" formControlName="RFC">
+          </div>
+
+          <div class="form-group">
+            <label for="estatus">Estatus</label>
+            <input type="text" class="form-control" id="estatus" formControlName="estatus">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit" class="closeModalButton">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
